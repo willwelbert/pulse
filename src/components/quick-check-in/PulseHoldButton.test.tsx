@@ -14,6 +14,12 @@ function renderBotao(props: Partial<React.ComponentProps<typeof PulseHoldButton>
 describe("PulseHoldButton", () => {
   afterEach(() => vi.useRealTimers());
 
+  it("shows only the pulse icon, keeping the hold instruction for screen readers", () => {
+    renderBotao();
+    const botao = screen.getByRole("button", { name: "Check-in rápido. Segure para abrir." });
+    expect(botao).toHaveTextContent("");
+  });
+
   it("opens after holding long enough", () => {
     vi.useFakeTimers();
     const { onAbrir } = renderBotao();

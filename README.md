@@ -27,7 +27,7 @@ pnpm build
 
 ## Check-in rápido
 
-Em qualquer tela (menos no check-in completo), o botão **"segure"** no canto inferior direito abre o check-in rápido. **Segurar por ~1,2s** simula checar a pulsação: um anel enche em volta do ícone, o botão bate como um coração e vibra em dois "tum-tum". Soltar antes pede para continuar segurando. No teclado, Enter abre direto.
+Em qualquer tela (menos no check-in completo), o botão com o ícone de pulso, no canto inferior direito, abre o check-in rápido. **Segurar por ~1,2s** simula checar a pulsação: um anel enche em volta do ícone, o botão bate como um coração e vibra em dois "tum-tum". Soltar antes pede para continuar segurando. No teclado, Enter abre direto.
 
 1. O **leque de notas** abre com o centro sobre o próprio botão. O centro mostra "N/5" e vira **✓** quando as 5 notas estão preenchidas.
 2. O ✓ abre uma **Drawer** com o resto do dia (Dia normal ou Dia de descanso, Conteúdos, Reuniões e Tempo trabalhado). Esse é o preço do check-in.

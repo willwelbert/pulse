@@ -23,7 +23,12 @@ type Props = {
   onConfirmar: () => void;
 };
 
-export function PulseHoldButton({ aberto, respondidas, onAbrir, onConfirmar }: Props) {
+export function PulseHoldButton({
+  aberto,
+  respondidas,
+  onAbrir,
+  onConfirmar,
+}: Props) {
   const [segurando, setSegurando] = useState(false);
   const [dica, setDica] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -117,7 +122,11 @@ export function PulseHoldButton({ aberto, respondidas, onAbrir, onConfirmar }: P
             "focus-visible:ring-4 focus-visible:ring-ring/40 focus-visible:outline-none",
           )}
         >
-          <svg viewBox="0 0 68 68" className="pointer-events-none absolute -inset-0.5 size-[68px] -rotate-90" aria-hidden>
+          <svg
+            viewBox="0 0 68 68"
+            className="pointer-events-none absolute -inset-0.5 size-[68px] -rotate-90"
+            aria-hidden
+          >
             <circle
               cx="34"
               cy="34"
@@ -126,10 +135,14 @@ export function PulseHoldButton({ aberto, respondidas, onAbrir, onConfirmar }: P
               strokeWidth="3"
               strokeLinecap="round"
               strokeDasharray={CIRCUNFERENCIA}
-              strokeDashoffset={segurando || (aberto && completo) ? 0 : CIRCUNFERENCIA}
+              strokeDashoffset={
+                segurando || (aberto && completo) ? 0 : CIRCUNFERENCIA
+              }
               className="stroke-primary-foreground/80"
               style={{
-                transition: segurando ? `stroke-dashoffset ${HOLD_MS}ms linear` : "stroke-dashoffset 150ms",
+                transition: segurando
+                  ? `stroke-dashoffset ${HOLD_MS}ms linear`
+                  : "stroke-dashoffset 150ms",
               }}
             />
           </svg>
@@ -137,13 +150,17 @@ export function PulseHoldButton({ aberto, respondidas, onAbrir, onConfirmar }: P
           {!aberto && (
             <span className="flex flex-col items-center leading-none">
               <Activity className="size-6" aria-hidden />
-              <span className="mt-1 text-[10px] font-semibold tracking-wide">segure</span>
             </span>
           )}
           {aberto && completo && <Check className="size-7" aria-hidden />}
-          {aberto && !completo && <span className="num text-xl">{`${respondidas}/${DIMENSOES.length}`}</span>}
+          {aberto && !completo && (
+            <span className="num text-xl">{`${respondidas}/${DIMENSOES.length}`}</span>
+          )}
         </button>
-        <HapticSwitch className="rounded-full" style={{ clipPath: "circle(50%)" }} />
+        <HapticSwitch
+          className="rounded-full"
+          style={{ clipPath: "circle(50%)" }}
+        />
       </div>
     </div>
   );
