@@ -83,8 +83,8 @@ describe("QuickCheckIn", () => {
     expect(lerCheckIns()[0].operacional).toEqual(operacional);
   });
 
-  it("is hidden on the full check-in page", async () => {
-    pathname = "/check-in";
+  it.each(["/check-in", "/check-in/"])("is hidden on the full check-in page (%s)", async (rota) => {
+    pathname = rota;
     renderWidget();
     await new Promise((r) => setTimeout(r, 300));
     expect(screen.queryByRole("button", { name: /segure para abrir/i })).not.toBeInTheDocument();

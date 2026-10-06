@@ -34,7 +34,8 @@ export function QuickCheckIn() {
     return () => window.removeEventListener("keydown", aoTeclar);
   }, [fase]);
 
-  if (pathname === "/check-in" || !pulse) return null;
+  // trailingSlash makes the route "/check-in/" in the static build.
+  if (pathname?.replace(/\/$/, "") === "/check-in" || !pulse) return null;
 
   function abrir(origem: "toque" | "teclado") {
     setEmocional(pulse?.checkInHoje?.emocional ?? {});
