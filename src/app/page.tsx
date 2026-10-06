@@ -10,7 +10,13 @@ import { ScoreRing } from "@/components/ScoreRing";
 import { WeekStrip } from "@/components/WeekStrip";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePulseDashboard } from "@/hooks/usePulse";
 
@@ -38,12 +44,11 @@ export default function DashboardPage() {
           </span>
           <div>
             <h1 className="font-serif text-3xl leading-none">Pulse</h1>
-            <p className="text-sm text-muted-foreground">Seu ritmo, um batimento por dia.</p>
+            <p className="text-sm text-muted-foreground">
+              Seu ritmo, um batimento por dia.
+            </p>
           </div>
         </div>
-        <Button asChild size="lg" className="h-12 w-full text-base">
-          <Link href="/check-in">{checkInDeHoje ? "Editar check-in de hoje" : "Fazer check-in de hoje"}</Link>
-        </Button>
       </header>
 
       {painel.acolhimento && <CareBanner />}
@@ -54,14 +59,20 @@ export default function DashboardPage() {
             Sua linha de pulso
             {painel.semanasSeguidas > 0 && (
               <Badge variant="secondary">
-                {painel.semanasSeguidas} {painel.semanasSeguidas === 1 ? "semana" : "semanas"} no ritmo
+                {painel.semanasSeguidas}{" "}
+                {painel.semanasSeguidas === 1 ? "semana" : "semanas"} no ritmo
               </Badge>
             )}
           </CardTitle>
-          <CardDescription>Últimos 14 dias. A linha ganha força a cada semana no ritmo.</CardDescription>
+          <CardDescription>
+            Últimos 14 dias. A linha ganha força a cada semana no ritmo.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          <PulseLine batimentos={painel.linha} semanasSeguidas={painel.semanasSeguidas} />
+          <PulseLine
+            batimentos={painel.linha}
+            semanasSeguidas={painel.semanasSeguidas}
+          />
           <PulseLegend />
         </CardContent>
       </Card>
@@ -90,7 +101,9 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle className="font-serif text-xl">Conquistas</CardTitle>
-          <CardDescription>Elas recompensam registrar, nunca a nota.</CardDescription>
+          <CardDescription>
+            Elas recompensam registrar, nunca a nota.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <AchievementList desbloqueadas={painel.conquistas} />
