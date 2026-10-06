@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { PT_Serif } from "next/font/google";
 import { DemoPanel } from "@/components/DemoPanel";
+import { QuickCheckIn } from "@/components/quick-check-in/QuickCheckIn";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "./providers";
 import "./globals.css";
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Providers>
           <div className="mx-auto w-full max-w-2xl px-4 py-4 sm:py-8">{children}</div>
           <DemoPanel />
+          <QuickCheckIn />
           <Toaster theme="light" position="top-center" />
         </Providers>
       </body>

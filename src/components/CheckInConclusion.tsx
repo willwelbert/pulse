@@ -24,6 +24,18 @@ const TEXTOS: Record<TomDaConclusao, { titulo: string; mensagem: string }> = {
 };
 
 export function CheckInConclusion({ salvo }: { salvo: CheckInSalvo }) {
+  return (
+    <div className="flex min-h-[calc(100dvh-4rem)] flex-col gap-6 pt-6">
+      <ResumoDoCheckIn salvo={salvo} />
+      <Button asChild size="lg" className="mt-auto h-12 w-full text-base">
+        <Link href="/">Ver meu Pulse</Link>
+      </Button>
+    </div>
+  );
+}
+
+/** What a saved check-in means: tone, Pulse Diário, the new beat and any new Conquistas. */
+export function ResumoDoCheckIn({ salvo }: { salvo: CheckInSalvo }) {
   const { painel } = usePulseDashboard();
   const { checkIn, novasConquistas } = salvo;
 
@@ -34,7 +46,7 @@ export function CheckInConclusion({ salvo }: { salvo: CheckInSalvo }) {
   const linha = linhaDePulso(painel.checkIns, checkIn.date, 7);
 
   return (
-    <div className="flex min-h-[calc(100dvh-4rem)] flex-col gap-6 pt-6">
+    <>
       <section className="space-y-2 text-center">
         <h1 className="font-serif text-3xl">{texto.titulo}</h1>
         <p className="text-muted-foreground">{texto.mensagem}</p>
@@ -85,10 +97,6 @@ export function CheckInConclusion({ salvo }: { salvo: CheckInSalvo }) {
           })}
         </section>
       )}
-
-      <Button asChild size="lg" className="mt-auto h-12 w-full text-base">
-        <Link href="/">Ver meu Pulse</Link>
-      </Button>
-    </div>
+    </>
   );
 }

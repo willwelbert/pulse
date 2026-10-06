@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { definirHoje, resetarRelogio } from "@/lib/clock";
 import { regular } from "@/lib/pulse/fixtures";
@@ -39,22 +39,27 @@ describe("CheckInStepper", () => {
   });
   afterAll(() => resetarRelogio());
 
-  it("walks a regular day one question per screen and saves it", async () => {
+  it("fills the emotional state on the fan, then the operational step, and saves", async () => {
     const user = userEvent.setup();
     renderStepper(pulse());
 
     await user.click(screen.getByRole("button", { name: /dia normal/i }));
-    const respostas: [RegExp, string][] = [
-      [/humor/, "5"],
-      [/energia/, "4"],
-      [/motivação/, "5"],
-      [/pressão/, "2"],
-      [/clareza/, "4"],
+    // Visual levels on the fan: Pressão is inverted, so level 4 stores pressão 2.
+    const niveis: [string, number][] = [
+      ["Humor", 5],
+      ["Energia", 4],
+      ["Motivação", 5],
+      ["Clareza", 4],
+      ["Pressão", 4],
     ];
-    for (const [pergunta, nota] of respostas) {
-      const grupo = await screen.findByRole("radiogroup", { name: pergunta });
-      await user.click(within(grupo).getByRole("radio", { name: new RegExp(`^${nota} —`) }));
+    await screen.findByRole("slider", { name: "Humor" });
+    const continuar = screen.getByRole("button", { name: "Continuar" });
+    for (const [nome, nivel] of niveis) {
+      expect(continuar).toBeDisabled();
+      screen.getByRole("slider", { name: nome }).focus();
+      await user.keyboard("{ArrowUp}".repeat(nivel));
     }
+    await user.click(continuar);
 
     expect(await screen.findByText("5h")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Somar 30min" }));

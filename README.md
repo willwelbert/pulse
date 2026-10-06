@@ -3,7 +3,7 @@
 Prova de conceito de **outro caminho** para o Pulse do app.added.today:
 
 - **shadcn** no lugar do design system interno, com o tema mapeado para os tokens da Added (brand-blue, surface, content, Aileron e PT Serif);
-- **check-in passo a passo**, uma pergunta por tela e mobile-first;
+- **check-in passo a passo** e mobile-first, com o estado emocional num **leque de notas** ancorado no polegar (uma fatia por dimensão; mais para fora é sempre melhor, então a Pressão aparece invertida);
 - **Campanhas ativas** vindo do Radar em vez de ser digitada no check-in;
 - **gamificação por constância**: Ritmo semanal, Dia de descanso, Conquistas, Linha de pulso e Modo acolhimento.
 
@@ -24,6 +24,16 @@ pnpm test:run     # domínio, adapters e fluxo do check-in
 pnpm lint
 pnpm build
 ```
+
+## Check-in rápido
+
+Em qualquer tela (menos no check-in completo), o botão **"segure"** no canto inferior direito abre o check-in rápido. **Segurar por ~1,2s** simula checar a pulsação: um anel enche em volta do ícone, o botão bate como um coração e vibra em dois "tum-tum". Soltar antes pede para continuar segurando. No teclado, Enter abre direto.
+
+1. O **leque de notas** abre com o centro sobre o próprio botão. O centro mostra "N/5" e vira **✓** quando as 5 notas estão preenchidas.
+2. O ✓ abre uma **Drawer** com o resto do dia (Dia normal ou Dia de descanso, Conteúdos, Reuniões e Tempo trabalhado). Esse é o preço do check-in.
+3. Depois de salvar, a Drawer mostra o Pulse Diário, a linha e as novas conquistas.
+
+A vibração usa `navigator.vibrate` no Android. No iPhone, onde nenhum navegador implementa essa API, ela usa um `<input type="checkbox" switch>` oculto, que dispara o háptico do sistema no iOS 18+ (`src/lib/haptics.ts`).
 
 ## Modo demonstração
 

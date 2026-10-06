@@ -39,6 +39,10 @@ export const ROTULOS_NOTAS: Record<Dimensao, string[]> = {
   clareza: ESCALA,
 };
 
+export function rotuloDaNota(dimensao: Dimensao, nota: number | undefined): string {
+  return nota ? ROTULOS_NOTAS[dimensao][nota - 1] : "—";
+}
+
 export function perguntaDaDimensao(dimensao: Dimensao, ontem: boolean): string {
   const verbo = ontem ? "estava" : "está";
   const quando = ontem ? "ontem" : "hoje";
@@ -46,14 +50,14 @@ export function perguntaDaDimensao(dimensao: Dimensao, ontem: boolean): string {
     humor: `Como ${verbo} seu humor ${quando}?`,
     energia: `Como ${verbo} sua energia ${quando}?`,
     motivacao: `Como ${verbo} sua motivação ${quando}?`,
-    pressao: `Quanta pressão você sentiu ${quando}?`,
+    pressao: ontem ? "Quão leve foi o dia de ontem?" : "Quão leve foi o dia?",
     clareza: `Como ${verbo} sua clareza mental ${quando}?`,
   };
   return perguntas[dimensao];
 }
 
 export const AJUDA_DIMENSOES: Partial<Record<Dimensao, string>> = {
-  pressao: "Prazos, cobranças, entregas. Aqui, quanto menor, mais leve foi o dia.",
+  pressao: "Pressão de prazos, cobranças e entregas. Mais para fora, mais leve: pouca pressão.",
 };
 
 export const DESCRICAO_ESTADOS: Record<EstadoDoDia, string> = {

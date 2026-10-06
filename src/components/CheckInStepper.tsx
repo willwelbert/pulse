@@ -10,7 +10,6 @@ import { useSalvarCheckIn } from "@/hooks/usePulse";
 import { formatarData } from "@/lib/pulse/formato";
 import {
   type CheckIn,
-  type Dimensao,
   DIMENSOES,
   type EstadoEmocional,
   type IndicadoresOperacionais,
@@ -19,12 +18,11 @@ import {
 } from "@/lib/pulse/types";
 import type { CheckInSalvo, PulseHoje } from "@/utils/adapters/pulseAdapter";
 import { ChoiceCard } from "./ChoiceCard";
+import { OperationalFields } from "./OperationalFields";
 import { CheckInConclusion } from "./CheckInConclusion";
-import { Counter } from "./Counter";
-import { RatingStep } from "./RatingStep";
-import { TimeWorkedField } from "./TimeWorkedField";
+import { RadialRating } from "./RadialRating";
 
-type Passo = "dia" | "tipo" | "registrar-emocional" | Dimensao | "operacional";
+type Passo = "dia" | "tipo" | "registrar-emocional" | "emocional" | "operacional";
 
 type Rascunho = {
   date: IsoDate | null;
@@ -52,7 +50,7 @@ function passosDe(r: Rascunho, escolherDia: boolean): Passo[] {
     ...(escolherDia ? (["dia"] as const) : []),
     "tipo",
     ...(tipo === "descanso" ? (["registrar-emocional"] as const) : []),
-    ...(comEmocional ? DIMENSOES : []),
+    ...(comEmocional ? (["emocional"] as const) : []),
     ...(tipo === "regular" ? (["operacional"] as const) : []),
   ];
 }
@@ -123,10 +121,11 @@ export function CheckInStepper({ pulse, tipoInicial }: Props) {
     avancar(base);
   }
 
+  const respondidas = DIMENSOES.filter((d) => rascunho.emocional[d] !== undefined).length;
   const podeContinuar =
     passo === "operacional" ||
     (passo === "tipo" && rascunho.tipo !== null) ||
-    (DIMENSOES.includes(passo as Dimensao) && rascunho.emocional[passo as Dimensao] !== undefined);
+    (passo === "emocional" && respondidas === DIMENSOES.length);
 
   return (
     <div className="flex min-h-[calc(100dvh-4rem)] flex-col gap-6">
@@ -210,16 +209,24 @@ export function CheckInStepper({ pulse, tipoInicial }: Props) {
           </div>
         )}
 
-        {DIMENSOES.includes(passo as Dimensao) && (
-          <RatingStep
-            key={passo}
-            dimensao={passo as Dimensao}
-            ontem={ehOntem}
-            valor={rascunho.emocional[passo as Dimensao]}
-            onEscolher={(nota) =>
-              avancar({ emocional: { ...rascunho.emocional, [passo]: nota } }, AVANCO_AUTOMATICO_MS)
-            }
-          />
+        {passo === "emocional" && (
+          <div className="space-y-4">
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="font-serif text-2xl leading-tight">
+                {ehOntem ? "Como você estava ontem?" : "Como você está hoje?"}
+              </h2>
+              <p className="shrink-0 text-sm text-muted-foreground" aria-live="polite">
+                <span className="num text-xl text-foreground">{respondidas}</span> de {DIMENSOES.length}
+              </p>
+            </div>
+            <RadialRating
+              valores={rascunho.emocional}
+              ontem={ehOntem}
+              onChange={(dimensao, nota) =>
+                setRascunho((r) => ({ ...r, emocional: { ...r.emocional, [dimensao]: nota } }))
+              }
+            />
+          </div>
         )}
 
         {passo === "operacional" && (
@@ -230,26 +237,10 @@ export function CheckInStepper({ pulse, tipoInicial }: Props) {
                 Campanhas ativas já vêm do Radar. Aqui é só o que a gente não consegue saber sozinho.
               </p>
             </div>
-            <div className="space-y-4 rounded-2xl border bg-card p-4">
-              <Counter
-                rotulo="Conteúdos produzidos"
-                valor={rascunho.operacional.conteudos}
-                onChange={(conteudos) => setRascunho({ ...rascunho, operacional: { ...rascunho.operacional, conteudos } })}
-              />
-              <Counter
-                rotulo="Reuniões"
-                valor={rascunho.operacional.reunioes}
-                onChange={(reunioes) => setRascunho({ ...rascunho, operacional: { ...rascunho.operacional, reunioes } })}
-              />
-            </div>
-            <div className="rounded-2xl border bg-card p-4">
-              <TimeWorkedField
-                minutos={rascunho.operacional.minutosTrabalhados}
-                onChange={(minutosTrabalhados) =>
-                  setRascunho({ ...rascunho, operacional: { ...rascunho.operacional, minutosTrabalhados } })
-                }
-              />
-            </div>
+            <OperationalFields
+              valor={rascunho.operacional}
+              onChange={(operacional) => setRascunho({ ...rascunho, operacional })}
+            />
           </div>
         )}
       </main>

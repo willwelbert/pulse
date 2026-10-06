@@ -19,7 +19,7 @@ As cinco notas de 1 a 5 de um Check-in: Humor, Energia, Motivação, Pressão e 
 _Avoid_: Dimensões emocionais, sentimentos
 
 **Pressão**:
-O quanto o dia pesou (prazos, cobranças, entregas). É a única nota do Estado emocional em que mais alto é pior.
+O quanto o dia pesou (prazos, cobranças, entregas). É guardada como respondida (mais alto é pior), mas toda representação visual em forma de escala a mostra invertida, para que "mais para fora/cima" seja sempre melhor.
 _Avoid_: Equilíbrio, estresse
 
 **Indicadores operacionais**:

@@ -30,7 +30,7 @@ export default function DashboardPage() {
   const checkInDeHoje = painel.checkIns.find((c) => c.date === painel.hoje);
 
   return (
-    <div className="space-y-4 pb-8">
+    <div className="space-y-4 pb-28">
       <header className="space-y-4">
         <div className="flex items-center gap-3 pr-12">
           <span className="grid size-10 place-items-center rounded-xl bg-card text-primary">

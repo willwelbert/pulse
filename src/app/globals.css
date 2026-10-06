@@ -132,3 +132,36 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* Leque de notas: one colour per dimension, none reusing the Linha de pulso states. */
+:root {
+  --dim-humor: #f2725c;
+  --dim-energia: #eab308;
+  --dim-motivacao: #ec4899;
+  --dim-clareza: #0d9488;
+  --dim-pressao: #3a5d8a;
+}
+
+/* Heartbeat while holding the Pulse button: two beats per HOLD_MS. */
+@utility animate-batimento {
+  animation: batimento 600ms ease-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes batimento {
+  0%,
+  100% {
+    scale: 1;
+  }
+  15% {
+    scale: 1.12;
+  }
+  30% {
+    scale: 1;
+  }
+  45% {
+    scale: 1.07;
+  }
+}
