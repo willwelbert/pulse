@@ -33,7 +33,7 @@ Em qualquer tela (menos no check-in completo), o botão **"segure"** no canto in
 2. O ✓ abre uma **Drawer** com o resto do dia (Dia normal ou Dia de descanso, Conteúdos, Reuniões e Tempo trabalhado). Esse é o preço do check-in.
 3. Depois de salvar, a Drawer mostra o Pulse Diário, a linha e as novas conquistas.
 
-A vibração usa `navigator.vibrate` no Android. No iPhone, onde nenhum navegador implementa essa API, ela usa um `<input type="checkbox" switch>` oculto, que dispara o háptico do sistema no iOS 18+ (`src/lib/haptics.ts`).
+**Vibração:** no Android usa `navigator.vibrate` (`src/lib/haptics.ts`), com os dois batimentos enquanto o botão é segurado. No iPhone nenhum navegador implementa essa API. Lá, o `HapticSwitch` (padrão do [tijnjh/ios-haptics](https://github.com/tijnjh/ios-haptics)) cobre as áreas tocáveis com um label transparente que repassa o toque a um `<input switch>` oculto, e o iOS 18+ toca o háptico do sistema. Isso só acontece num **toque real**: os toques no leque, no ✓ e no "Salvar check-in", e o momento de soltar depois de segurar. Os batimentos por timer não vibram no iPhone.
 
 ## Modo demonstração
 
