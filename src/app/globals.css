@@ -1,26 +1,134 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+/* Big figures: light weight, tight tracking, aligned digits. */
+@utility num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+  font-weight: 200;
+}
+
+/* Small uppercase label above a block. */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
 }
 
 @theme inline {
+  --font-sans: var(--font-aileron), system-ui, sans-serif;
+  --font-serif: var(--font-pt-serif), Georgia, serif;
+  --font-heading: var(--font-serif);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-brand-dark: var(--brand-dark);
+  --color-pulse-comum: var(--pulse-comum);
+  --color-pulse-tenso: var(--pulse-tenso);
+  --color-pulse-descanso: var(--pulse-descanso);
+  --color-pulse-vazio: var(--pulse-vazio);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * shadcn variables mapped onto the app.added.today tokens
+ * (surface, content, brand-blue, action, focus).
+ */
+:root {
+  --brand-dark: #1b353b;
+  --background: #eaf0f1; /* surface-platform-page */
+  --foreground: #1a1a1a; /* content */
+  --card: #ffffff; /* surface-elevated */
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #3a5d8a; /* action-primary / brand-blue-900 */
+  --primary-foreground: #ffffff;
+  --secondary: #d7e5f3; /* action-secondary */
+  --secondary-foreground: #1b353b;
+  --muted: #ebf2f9; /* surface-muted */
+  --muted-foreground: #555555; /* content-muted */
+  --accent: #ebf2f9;
+  --accent-foreground: #1b353b;
+  --destructive: #ef4444;
+  --border: #d7e5f3;
+  --input: #b0cbdf;
+  --ring: #3a5d8a; /* focus */
+  --chart-1: #3a5d8a;
+  --chart-2: #6093cd;
+  --chart-3: #a4d38e;
+  --chart-4: #f2725c;
+  --chart-5: #0d9488;
+  --radius: 0.75rem;
+
+  /* Linha de pulso: colour says the day's state, shape repeats it. */
+  --pulse-comum: #3f8f5f;
+  --pulse-tenso: #e0533d;
+  --pulse-descanso: #6093cd;
+  --pulse-vazio: #b8c4cc;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Draws the newest beat of the Linha de pulso (paths use pathLength=1). */
+@utility animate-desenhar {
+  stroke-dasharray: 1;
+  animation: desenhar 1.2s ease-out both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes desenhar {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }

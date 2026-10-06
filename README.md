@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pulse
 
-## Getting Started
+Prova de conceito de **outro caminho** para o Pulse do app.added.today:
 
-First, run the development server:
+- **shadcn** no lugar do design system interno, com o tema mapeado para os tokens da Added (brand-blue, surface, content, Aileron e PT Serif);
+- **check-in passo a passo**, uma pergunta por tela e mobile-first;
+- **Campanhas ativas** vindo do Radar em vez de ser digitada no check-in;
+- **gamificação por constância**: Ritmo semanal, Dia de descanso, Conquistas, Linha de pulso e Modo acolhimento.
+
+O vocabulário do domínio está em [`CONTEXT.md`](./CONTEXT.md), e a decisão principal em [`docs/adr/0001`](./docs/adr/0001-gamificacao-recompensa-registro-nao-nota.md).
+
+## Stack
+
+Next.js 16 (App Router) · Tailwind CSS v4 · shadcn (radix-nova) · TanStack Query · zod · vitest + Testing Library · oxlint · pnpm.
+
+Os dados são mockados atrás de adapters com zod que imitam o envelope `{ success, data | errors }` de `api.added.today/pulse/*` (`src/utils/mock/api.ts`). Ficam no `localStorage`, então trocar pela API real é trocar a implementação dessas três funções.
+
+## Rodando
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm test:run     # domínio, adapters e fluxo do check-in
+pnpm lint
+pnpm build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Modo demonstração
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+O botão com o ícone de frasco, no canto superior direito, abre o Modo demonstração. Ele simula a passagem dos dias e carrega históricos prontos, para mostrar cada regra sem esperar os dias passarem:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Cenário | O que mostra |
+| --- | --- |
+| Primeiro acesso | Linha vazia. O primeiro check-in desbloqueia **Primeiro pulso**. |
+| Esqueceu ontem | O check-in pergunta se o registro é de **hoje ou de ontem**. |
+| Semana no ritmo | Sexta-feira com 4 de 5 dias. O check-in de hoje desbloqueia **Semana no ritmo**. |
+| Pressão alta 3 dias | Liga o **Modo acolhimento** e mostra batimentos vermelhos e irregulares na linha. |
+| Volta depois de sumir | 10 dias sem registro. O próximo check-in desbloqueia **De volta**. |
+| 4 semanas no ritmo | O check-in de hoje completa **4 semanas no ritmo**. |
 
-## Learn More
+O painel também tem **Avançar 1 dia**, para ver a semana e o ritmo mudarem, e **Data real**.
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/lib/pulse/         regras de domínio puras (score, ritmo, conquistas, acolhimento, linha, tempo)
+src/lib/clock.ts       "hoje" injetável, usado pelo Modo demonstração
+src/utils/adapters/    schemas zod e envelope da API
+src/utils/mock/        API falsa, store em localStorage e cenários
+src/hooks/             TanStack Query (today, dashboard, salvar check-in)
+src/components/        telas e peças (CheckInStepper, PulseLine, WeekStrip…)
+src/components/ui/     shadcn
+```
