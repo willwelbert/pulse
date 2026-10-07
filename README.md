@@ -48,13 +48,27 @@ O botão com o ícone de frasco, no canto superior direito, abre o Modo demonstr
 | Volta depois de sumir | 10 dias sem registro. O próximo check-in desbloqueia **De volta**. |
 | 4 semanas no ritmo | O check-in de hoje completa **4 semanas no ritmo**. |
 
-O painel também tem **Avançar 1 dia**, para ver a semana e o ritmo mudarem, e **Data real**.
+O painel também tem **Avançar 1 dia**, para ver a semana e o ritmo mudarem, **Data real** e **Instalar no celular** (veja abaixo).
+
+## App no celular (PWA)
+
+O Pulse pode ser instalado na tela inicial do celular e abre em tela cheia, sem a barra do navegador.
+
+- **Android:** no Chrome, menu ⋮ → **Instalar app**. Quando o navegador permite, o Modo demonstração mostra o botão **Instalar o Pulse**.
+- **iPhone:** no Safari, **Compartilhar** → **Adicionar à Tela de Início**. No iOS 26, "Abrir como app web" já vem ligado.
+
+Instalar exige HTTPS, então o teste de verdade é no GitHub Pages. Pelo `pnpm dev:host` (HTTP na rede local), o iPhone já abre em tela cheia, mas o Android não oferece instalar. Não há service worker: o app instalado precisa de internet para abrir.
+
+No iPhone, o app instalado tem armazenamento separado do Safari e começa com o histórico vazio. Os cenários do Modo demonstração resolvem isso.
+
+Os ícones usam o símbolo da Added Today (`public/added-today-symbol-blue.svg`), em branco sobre o azul do botão Pulse. A referência é `src/app/icon.svg`. Os PNGs de `public/icons/` e o `src/app/apple-icon.png` são esse desenho rasterizado; as versões maskable e Apple não têm cantos arredondados.
 
 ## Estrutura
 
 ```
 src/lib/pulse/         regras de domínio puras (score, ritmo, conquistas, acolhimento, linha, tempo)
 src/lib/clock.ts       "hoje" injetável, usado pelo Modo demonstração
+src/lib/instalacao.ts  instalação na tela inicial, oferecida no Modo demonstração
 src/utils/adapters/    schemas zod e envelope da API
 src/utils/mock/        API falsa, store em localStorage e cenários
 src/hooks/             TanStack Query (today, dashboard, salvar check-in)

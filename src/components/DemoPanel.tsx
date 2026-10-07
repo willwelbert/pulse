@@ -4,6 +4,7 @@ import { FastForward, FlaskConical, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { InstallSection } from "@/components/InstallSection";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useHoje } from "@/hooks/useHoje";
@@ -31,7 +32,7 @@ export function DemoPanel() {
         <Button
           variant="secondary"
           size="icon"
-          className="fixed top-4 right-4 z-40 size-11 rounded-full shadow-md"
+          className="fixed top-[calc(1rem+env(safe-area-inset-top))] right-[calc(1rem+env(safe-area-inset-right))] z-40 size-11 rounded-full shadow-md"
           aria-label="Abrir Modo demonstração"
         >
           <FlaskConical className="size-5" aria-hidden />
@@ -46,7 +47,7 @@ export function DemoPanel() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="space-y-6 px-4 pb-6">
+        <div className="space-y-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
           <div className="grid grid-cols-2 gap-2">
             <Button variant="outline" className="h-12" onClick={() => avancarDias(1)}>
               <FastForward aria-hidden /> Avançar 1 dia
@@ -76,6 +77,8 @@ export function DemoPanel() {
               ))}
             </ul>
           </section>
+
+          <InstallSection />
 
           <Button
             variant="ghost"

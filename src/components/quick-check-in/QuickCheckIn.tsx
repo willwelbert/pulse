@@ -67,7 +67,7 @@ export function QuickCheckIn() {
           {/* The fan's corner (its centre) sits exactly on the Pulse button's centre. */}
           <div
             ref={leque}
-            className="absolute right-12 bottom-[calc(3rem+env(safe-area-inset-bottom))] w-[min(calc(100vw-4rem),400px)] origin-bottom-right animate-in duration-300 fade-in zoom-in-50"
+            className="absolute right-[calc(3rem+env(safe-area-inset-right))] bottom-[calc(3rem+env(safe-area-inset-bottom))] w-[min(calc(100vw-4rem),400px)] origin-bottom-right animate-in duration-300 fade-in zoom-in-50"
           >
             <RadialFan
               semCentro

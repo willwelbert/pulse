@@ -246,7 +246,7 @@ export function CheckInStepper({ pulse, tipoInicial }: Props) {
       </main>
 
       {passo !== "dia" && passo !== "registrar-emocional" && (
-        <footer className="sticky bottom-0 -mx-4 bg-background/90 px-4 pt-2 pb-4 backdrop-blur">
+        <footer className="sticky bottom-0 -mx-4 bg-background/90 px-4 pt-2 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur">
           <Button
             size="lg"
             className="h-12 w-full text-base"
