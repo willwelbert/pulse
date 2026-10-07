@@ -27,10 +27,14 @@ const ptSerif = PT_Serif({
 export const metadata: Metadata = {
   title: "Pulse",
   description: "Prova de conceito: check-in diário do Pulse com shadcn e gamificação por constância.",
+  // Installed on the iPhone: dark status bar text, like the rest of the light page.
+  appleWebApp: { title: "Pulse", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
   themeColor: "#eaf0f1",
+  // Installed, the app fills the screen, so the env(safe-area-inset-*) paddings take effect.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

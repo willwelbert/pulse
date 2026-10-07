@@ -78,7 +78,7 @@ export function PulseHoldButton({
       : `Responda as 5 fatias (${respondidas} de ${DIMENSOES.length})`;
 
   return (
-    <div className="fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50">
+    <div className="fixed right-[calc(1rem+env(safe-area-inset-right))] bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50">
       <p
         aria-live="polite"
         className={cn(
